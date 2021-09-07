@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:mobile_final/constants/colors.dart';
 import 'package:mobile_final/models/place_model.dart';
+import 'package:mobile_final/screens/best_offer_page.dart';
 import 'package:mobile_final/screens/recent_added_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.all(14.0),
           child: ListView(
             children: [
               const SizedBox(
@@ -64,38 +65,80 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(
                 height: 50,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Recently Added",
-                    style: textTheme.headline5,
-                  ),
-                  const Text(
-                    "See all",
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 350,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
+              RencentAddedSection(textTheme: textTheme),
+              Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RecentAdded(placeModel: placeCollection[0]),
-                    RecentAdded(placeModel: placeCollection[1])
+                    Text(
+                      "Todays Best Offer",
+                      style: textTheme.headline5,
+                    ),
+                    const Text(
+                      "See all",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    )
                   ],
                 ),
-              )
+                const SizedBox(
+                  height: 30,
+                ),
+                BestOffer(placeModel: placeCollection[3])
+              ]),
+              const SizedBox(
+                height: 90,
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class RencentAddedSection extends StatelessWidget {
+  const RencentAddedSection({
+    Key? key,
+    required this.textTheme,
+  }) : super(key: key);
+
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Recently Added",
+              style: textTheme.headline5,
+            ),
+            const Text(
+              "See all",
+              style: TextStyle(
+                color: Colors.grey,
+              ),
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Container(
+          height: 350,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              RecentAdded(placeModel: placeCollection[0]),
+              RecentAdded(placeModel: placeCollection[1])
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

@@ -37,7 +37,7 @@ List<PlaceModel> placeCollection = [
     imagePath: "asset/images/image4.jpg",
   ),
   PlaceModel(
-    title: "La Vie est Belle",
+    title: "La Vie est Belle VN",
     details: "4 College Court Holyoke, MA",
     rent: 1800,
     imagePath: "asset/images/image5.jpg",

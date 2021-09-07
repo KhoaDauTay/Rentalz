@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:glassmorphism_ui/glassmorphism_ui.dart';
 import 'package:mobile_final/models/place_model.dart';
 import 'package:mobile_final/screens/place_detail_page.dart';
 
-class RecentAdded extends StatelessWidget {
+class BestOffer extends StatelessWidget {
   final PlaceModel placeModel;
-  RecentAdded({required this.placeModel});
+  BestOffer({required this.placeModel});
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -17,60 +17,39 @@ class RecentAdded extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => PlaceDetail(placeModel: placeModel)));
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 14),
-        child: Container(
-          height: 300,
-          width: 250,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: Color(0xffD6D6D6), width: 1.0)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: Container(
+        height: 220,
+        width: 380,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(32),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Row(
             children: [
-              Stack(
-                children: [
-                  Hero(
-                    tag: placeModel.title,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(15),
-                          topRight: Radius.circular(15)),
-                      child: Image(image: AssetImage(placeModel.imagePath)),
-                    ),
+              Hero(
+                tag: placeModel.title,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: Image(
+                    height: 190,
+                    width: 120,
+                    fit: BoxFit.cover,
+                    image: AssetImage(placeModel.imagePath),
                   ),
-                  Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: GlassContainer(
-                        height: 40,
-                        width: 150,
-                        blur: 5,
-                        opacity: 0.5,
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                        ),
-                        child: Center(
-                          child: RichText(
-                            text: TextSpan(
-                                text: "\$ ${placeModel.rent} / ",
-                                style: textTheme.headline6,
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: "Mo",
-                                      style: DefaultTextStyle.of(context).style)
-                                ]),
-                          ),
-                        ),
-                      ))
-                ],
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 12,
+                    ),
                     Text(
                       placeModel.title,
                       style: textTheme.headline6,
@@ -83,15 +62,16 @@ class RecentAdded extends StatelessWidget {
                       style: textTheme.bodyText1!.apply(color: Colors.black45),
                     ),
                     SizedBox(
-                      height: 6,
+                      height: 8,
                     ),
-                    Row(
+                    Flexible(
+                        child: Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
                             height: 30,
-                            width: 60,
+                            width: 50,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8),
@@ -112,7 +92,7 @@ class RecentAdded extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
                             height: 30,
-                            width: 60,
+                            width: 50,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8),
@@ -133,7 +113,7 @@ class RecentAdded extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
                             height: 30,
-                            width: 60,
+                            width: 50,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8),
@@ -151,10 +131,23 @@ class RecentAdded extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )
+                    )),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                          text: "\$ ${placeModel.rent} / ",
+                          style: textTheme.headline6,
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: "Mo",
+                                style: DefaultTextStyle.of(context).style)
+                          ]),
+                    ),
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),
