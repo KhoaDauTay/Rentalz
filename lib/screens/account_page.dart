@@ -1,15 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class Accountpage extends StatefulWidget {
+import 'auth/login_page.dart';
+
+class AccountPage extends StatefulWidget {
   @override
-  _AccountpageState createState() => _AccountpageState();
+  _AccountPageState createState() => _AccountPageState();
 }
 
-class _AccountpageState extends State<Accountpage> {
+class _AccountPageState extends State<AccountPage> {
+  final storage = FlutterSecureStorage();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.purple,
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("User Information"),
+                FlatButton(
+                  onPressed: () async {
+                    await storage.deleteAll();
+                    Navigator.of(context, rootNavigator: true).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => new LoginPage()));
+                  },
+                  child: Text(
+                    "Logout",
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          color: Colors.white,
+        ),
+      ),
     );
   }
 }

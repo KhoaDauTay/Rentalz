@@ -1,77 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:mobile_final/models/place_model.dart';
-import 'package:mobile_final/screens/place_detail_page.dart';
+import 'package:glassmorphism_ui/glassmorphism_ui.dart';
+import 'package:mobile_final/models/house_model.dart';
+import 'package:mobile_final/screens/admin/house/house_detail_page.dart';
 
-class BestOffer extends StatelessWidget {
-  final PlaceModel placeModel;
-  BestOffer({required this.placeModel});
+import '../../constants.dart';
 
+class RecentAdded extends StatelessWidget {
+  final House house;
+  RecentAdded({required this.house});
   @override
   Widget build(BuildContext context) {
+    final height =
+        MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top;
+    final width = MediaQuery.of(context).size.width -
+        MediaQuery.of(context).padding.left -
+        MediaQuery.of(context).padding.right;
+    final space = height > 650 ? kSpaceM : kSpaceS;
     final textTheme = Theme.of(context).textTheme;
     return GestureDetector(
       onTap: () {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PlaceDetail(placeModel: placeModel)));
+                builder: (context) => HouseDetailPage(house: house)));
       },
-      child: Container(
-        height: 220,
-        width: 380,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(32),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Row(
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(vertical: space + 10, horizontal: space - 2),
+        child: Container(
+          height: 300,
+          width: 250,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Color(0xffD6D6D6), width: 1.0)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Hero(
-                tag: placeModel.title,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(24),
-                  child: Image(
-                    height: 190,
-                    width: 120,
-                    fit: BoxFit.cover,
-                    image: AssetImage(placeModel.imagePath),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Flexible(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 12,
+              Stack(
+                children: [
+                  Hero(
+                    tag: house.name,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15),
+                          topRight: Radius.circular(15)),
+                      child: Container(
+                          width: 280,
+                          height: 180,
+                          child: Image(image: NetworkImage(house.image))),
                     ),
+                  ),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: GlassContainer(
+                        height: 40,
+                        width: 150,
+                        blur: 5,
+                        opacity: 0.5,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                        ),
+                        child: Center(
+                          child: RichText(
+                            text: TextSpan(
+                                text: "\$ ${house.rent} / ",
+                                style: textTheme.headline6,
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: "Mo",
+                                      style: DefaultTextStyle.of(context).style)
+                                ]),
+                          ),
+                        ),
+                      ))
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      placeModel.title,
+                      house.name,
                       style: textTheme.headline6,
                     ),
                     SizedBox(
                       height: 6,
                     ),
                     Text(
-                      placeModel.details,
+                      house.address,
                       style: textTheme.bodyText1!.apply(color: Colors.black45),
                     ),
                     SizedBox(
-                      height: 8,
+                      height: 6,
                     ),
-                    Flexible(
-                        child: Row(
+                    Row(
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
                             height: 30,
-                            width: 50,
+                            width: 60,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8),
@@ -92,7 +124,7 @@ class BestOffer extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
                             height: 30,
-                            width: 50,
+                            width: 60,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8),
@@ -113,7 +145,7 @@ class BestOffer extends StatelessWidget {
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
                             height: 30,
-                            width: 50,
+                            width: 60,
                             decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(8),
@@ -131,23 +163,10 @@ class BestOffer extends StatelessWidget {
                           ),
                         ),
                       ],
-                    )),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                          text: "\$ ${placeModel.rent} / ",
-                          style: textTheme.headline6,
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: "Mo",
-                                style: DefaultTextStyle.of(context).style)
-                          ]),
-                    ),
+                    )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
